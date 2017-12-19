@@ -1,0 +1,19 @@
+services:
+    grid_event_listener.product:
+        class: 'Oro\Bundle\CustomGridBundle\Datagrid\ProductsGridListener'
+        arguments:
+            - @doctrine
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.products-grid, method: onBuildBefore }
+            - { name: kernel.event_listener, event: oro_datagrid.orm_datasource.result.after.products-grid, method: onResultAfter }
+
+    grid_filter.price_lists:
+            class: 'Oro\Bundle\CustomGridBundle\Filter\ProductPriceListsFilter'
+            public: false
+            arguments:
+                - '@form.factory'
+                - '@oro_filter.filter_utility'
+            calls:
+                - [setRegistry, ['@doctrine']]
+            tags:
+                - { name: oro_filter.extension.orm_filter.filter, type: product-price-lists }

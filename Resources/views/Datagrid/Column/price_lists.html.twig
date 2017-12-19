@@ -1,0 +1,10 @@
+{% set priceLists = record.getValue('price_lists') %}
+{% if priceLists %}
+    {% for priceList in priceLists %}
+        <ul class="radio-ul">
+            <li>
+                <a href="{{ path('orob2b_pricing_price_list_view', {'id': priceList.id}) }}">{{ priceList.name }}</a>
+            </li>
+        </ul>
+    {% endfor %}
+{% endif %}
